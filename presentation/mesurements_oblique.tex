@@ -1,0 +1,463 @@
+\providecommand{\pdfxopts}{a-1b,cyrxmp}
+\providecommand{\thisyear}{2021}
+\immediate\write18{rm \jobname.xmpdata}%  uncomment for Unix-based systems
+\begin{filecontents*}{\jobname.xmpdata}
+	\Title{Измерение тока и напряжения в косоугольных координатах в трехфазной обобщенной электрической машине \textemdash\thisyear}
+\Author{
+Альмушреки Осама Абду Али\sep
+Обама Омбеде Никола Серж\sep
+Прокшин Артем Николаевич\sep
+Татаринцев Николай Иванович\sep
+Трофимов Александр Викторович}
+\Creator{pdfTeX + pdfx.sty with options \pdfxopts }
+\Subject{Измерение тока и напряжения в косоугольных координатах в трехфазной обобщенной электрической машине}
+\Keywords{измерение, фазный ток, линейное напряжение, ковариантная координата, контравариантная координата}
+\CoverDisplayDate{март \thisyear}
+\CoverDate{2021-05-22}
+\Copyrighted{True}
+\Copyright{Public Domain}
+\CopyrightURL{http://github.com/trot-t}
+\Creator{pdfTeX + pdfx.sty with options \pdfxopts }
+\end{filecontents*}
+
+\documentclass[14pt]{beamer}
+
+\pdfcompresslevel=9
+
+\usepackage[\pdfxopts]{pdfx}[2016/03/09]
+\PassOptionsToPackage{obeyspaces}{url}
+\let\tldocrussian=1  % for live4ht.cfg
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage[european,cuteinductors,smartlabels]{circuitikz}
+\usetikzlibrary{arrows.meta, shadows}
+
+\usepackage{amssymb,amsfonts,amsmath,mathtext}
+\usepackage{amssymb}
+\usepackage{cite,enumerate,float,indentfirst}
+\usepackage{cancel}
+\usepackage{csquotes}
+\newcommand{\quotes}[1]{``#1''}
+\usetikzlibrary{calc}
+
+\usepackage{advdate}
+
+%\usepackage{pgfplots}
+%\usepackage[left=1cm,right=1cm, top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
+
+% Beamer — верстаем презентации  https://habrahabr.ru/post/145523/ 
+\graphicspath{{images/}}
+
+\usetheme{Pittsburgh}
+\usecolortheme{whale}
+
+\setbeamercolor{footline}{fg=blue}
+\setbeamertemplate{footline}{
+\leavevmode%
+\hbox{%
+\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{}%
+Прокшин А.Н. и др.
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{}%
+Санкт-Петербург, 2021
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{}%
+Стр. \insertframenumber{} из \inserttotalframenumber \hspace*{2ex}
+\end{beamercolorbox}}%
+\vskip0pt%
+}
+
+\newcommand{\itemi}{\item[\checkmark]}
+
+	\usefonttheme[onlymath]{serif} % в формулах использовать текст с засечками
+\begin{document}
+\title{\small{Измерение тока и напряжения в косоугольных координатах в трехфазной обобщенной электрической машине }}
+\author{\small{%
+\emph{авторы:}~Альмушреки Осама Абду Али\\
+\emph{}~Обама Омбеде Никола Серж\\
+\emph{}~Прокшин Артем Николаевич\\%
+\emph{}~Татаринцев Николай Иванович\\
+\emph{}~Трофимов Александр Викторович}}
+
+
+
+\institute{Санкт-Петербургский государственный электротехнический университет «ЛЭТИ» им. В.И. Ульянова (Ленина)}
+\vspace{30pt}%
+
+\vspace{60pt}%
+
+\AdvanceDate[-1] % печатаю в субботу а нужна пятница
+%\date{\small{Санкт-Петербург, 2021}}
+
+\AtBeginSection{
+	\begin{frame}
+		\frametitle{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+
+\begin{frame}
+\titlepage	
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\small инвертор напряжения синхронизированный с сетью}
+	\vspace{-1cm}
+\begin{figure}[!ht]
+\include{inverter_grid_IV}
+%        \caption{схема инвертора напряжения ведомого сетью и изображающий вектор напряжения инвертора}
+%        \label{invertor_with_grid}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{\small измеряемые и математические координаты вектора напряжения}
+\vspace{-0.2cm}
+\hspace{-1.2cm}
+\begin{tabular}{cl}
+\begin{minipage}[h]{0.49\linewidth}
+
+\begin{figure}[!ht]
+\caption{измеряемые координаты %изображающего вектора 
+	-- ковариантные} 
+\centering
+\begin{circuitikz}
+        \newcommand{\Axis}{4.3}
+        \newcommand{\Axisy}{2.4}
+        \newcommand{\Axisyy}{-0.9}
+        \newcommand{\gammaa}{120} % угол между осями
+        \newcommand{\E}{2.7}
+        \newcommand{\alfa}{20} % угол вектора
+        \newcommand{\V}{3.5}
+        \draw[thin,->] (0,0) -- ({\Axis*cos(0)},{\Axis*sin(0)}) node [below] {$U_{\scriptscriptstyle AB}$};
+        \draw[thin,->] ({\Axisyy*cos(\gammaa)},{\Axisyy*sin(\gammaa)}) -- ({\Axisy*cos(\gammaa)},{\Axisy*sin(\gammaa)}) node [above right] {$U_{\scriptscriptstyle BC}$};
+%        \draw[thick, ->] (0,0) -- ({\E*cos(0)},{\E*sin(0)}) node[below] {$\vec{e}_{\scriptscriptstyle AB}$};
+%        \draw[thick, ->] (0,0) -- ({\E*cos(\gammaa)},{\E*sin(\gammaa)}) node[left] {$\vec{e}_{\scriptscriptstyle BC}$};
+        % сам вектор
+        \draw[blue,->] (0,0) -- ({\V*cos(\alfa)},{\V*sin(\alfa)}) node (V) {} node[right] {$\vec{u}$};
+        % перпендикулярные проекции
+        \draw[dashed] ({\V*cos(\alfa)},{\V*sin(\alfa)}) -- ({\V*cos(\alfa)},0) node[below] {$u_{\scriptscriptstyle\!A\!B}$};
+        \newcommand{\Vbc}{(\V*cos(\alfa)*cos(\gammaa) + \V*sin(\alfa)*sin(\gammaa))} % проекция на ось Vbc
+%       \draw[dashed] (V.center) -- ({\Vbc*cos(\gammaa)},{\Vbc*sin(\gammaa)}) node[below left=-1mm] {$v_{\scriptscriptstyle\!B\!C}$};
+        \draw[dashed] (V.center) -- ({\Vbc*cos(\gammaa)},{\Vbc*sin(\gammaa)}) node[left=1mm] {$u_{\scriptscriptstyle\!B\!C}$};
+
+        %проекция на сопряженную ось e^{AB}
+        \newcommand{\VAB}{(\V*cos(\alfa)*cos(\gammaa-90-\alfa) + \V*sin(\alfa)*sin(\gammaa-90-\alfa))} % проекция на ось V^AB
+%        \draw[dashed]  (V.center) -- ({\VAB/cos(\gammaa-90)}, 0) node[below] {$u^{\scriptscriptstyle\!A\!B}$};
+        %проекция на сопряженную ось e^{BC}
+        \newcommand{\VBC}{\V*sin(\alfa)}
+%        \draw[dashed]  (V.center) --  ({\VBC/cos(\gammaa-90)*cos(\gammaa)}, {\VBC/cos(\gammaa-90)*sin(\gammaa)}) node[below left=-1mm] {$u^{\scriptscriptstyle\!B\!C}$};
+\end{circuitikz}
+
+\end{figure}
+\end{minipage}
+
+\begin{minipage}[h]{0.50\linewidth}
+
+\begin{figure}[!ht]
+\caption{математические координаты %изображающего вектора 
+	-- контравариантные}
+\centering
+
+\begin{circuitikz}
+        \newcommand{\Axis}{4.7}
+        \newcommand{\Axisy}{2.4}
+        \newcommand{\Axisyy}{-0.9}
+        \newcommand{\gammaa}{120} % угол между осями
+        \newcommand{\E}{2.7}
+        \newcommand{\alfa}{20} % угол вектора
+        \newcommand{\V}{3.5}
+        \draw[thin,->] (0,0) -- ({\Axis*cos(0)},{\Axis*sin(0)}) node [above right] {$U_{\scriptscriptstyle AB}$};
+        \draw[thin,->] ({\Axisyy*cos(\gammaa)},{\Axisyy*sin(\gammaa)}) -- ({\Axisy*cos(\gammaa)},{\Axisy*sin(\gammaa)}) node [above right] {$U_{\scriptscriptstyle BC}$};
+%        \draw[thick, ->] (0,0) -- ({\E*cos(0)},{\E*sin(0)}) node[below] {$\vec{e}_{\scriptscriptstyle AB}$};
+%        \draw[thick, ->] (0,0) -- ({\E*cos(\gammaa)},{\E*sin(\gammaa)}) node[left] {$\vec{e}_{\scriptscriptstyle BC}$};
+        % сам вектор
+        \draw[blue,->] (0,0) -- ({\V*cos(\alfa)},{\V*sin(\alfa)}) node (V) {} node[right] {$\vec{u}$};
+        % перпендикулярные проекции
+%        \draw[dashed] ({\V*cos(\alfa)},{\V*sin(\alfa)}) -- ({\V*cos(\alfa)},0) node[below] {$u_{\scriptscriptstyle\!A\!B}$};
+        \newcommand{\Vbc}{(\V*cos(\alfa)*cos(\gammaa) + \V*sin(\alfa)*sin(\gammaa))} % проекция на ось Vbc
+%       \draw[dashed] (V.center) -- ({\Vbc*cos(\gammaa)},{\Vbc*sin(\gammaa)}) node[below left=-1mm] {$v_{\scriptscriptstyle\!B\!C}$};
+%        \draw[dashed] (V.center) -- ({\Vbc*cos(\gammaa)},{\Vbc*sin(\gammaa)}) node[left=1mm] {$u_{\scriptscriptstyle\!B\!C}$};
+
+        %проекция на сопряженную ось e^{AB}
+        \newcommand{\VAB}{(\V*cos(\alfa)*cos(\gammaa-90-\alfa) + \V*sin(\alfa)*sin(\gammaa-90-\alfa))} % проекция на ось V^AB
+        \draw[dashed]  (V.center) -- ({\VAB/cos(\gammaa-90)}, 0) node[below] {$u^{\scriptscriptstyle\!A\!B}$};
+        %проекция на сопряженную ось e^{BC}
+        \newcommand{\VBC}{\V*sin(\alfa)}
+        \draw[dashed]  (V.center) --  ({\VBC/cos(\gammaa-90)*cos(\gammaa)}, {\VBC/cos(\gammaa-90)*sin(\gammaa)}) node[above right=-1mm] {$u^{\scriptscriptstyle\!B\!C}$};
+\end{circuitikz}
+        
+\end{figure}
+\end{minipage}
+
+\end{tabular}
+\vspace{0.5cm}
+
+$$
+|\vec{u}|^2 = (\vec{u} \cdot \vec{u})  = u_{\scriptscriptstyle AB}u^{\scriptscriptstyle AB} +  u_{\scriptscriptstyle BC}u^{\scriptscriptstyle BC}
+$$
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\small в симметричной системе известное выражение}
+$$
+	\vec{i} = \frac{2}{3}\left(\vec{i}_{a_{\!\perp}} + \vec{i}_{b_{\!\perp}} + \vec{i}_{c_{\!\perp}}\right) 
+$$
+%
+\begin{tabular}{cl}
+\begin{minipage}[h]{0.3\linewidth}
+\begin{tikzpicture}[scale=2]
+\newcommand{\D}){8}
+\draw[->, very thin,>=latex] (0,0) -- ({cos(-30)}, {sin(-30)}) node[below] {$\scriptstyle I_B$};
+\draw[->, very thin,>=latex] (0,0) -- ({cos(90)},{sin(90)})  node[above] {$\scriptstyle I_C$};
+\draw[->, very thin,>=latex] (0,0) -- ({cos(210)},{sin(210)}) node[below] {$\scriptstyle I_A$};
+
+\draw[green, very thick,->,>=latex] (0,0) -- ( {0.59*cos(-30) - 0*sin(-30)}, {0.59*sin(-30) + 0*cos(-30)});
+\draw[red, very thick,->,>=latex] (0,0) -- ({(-0.20)*cos(-30) - 0.35*sin(-30)}, {(-0.20)*sin(-30) +  0.35*cos(-30)});
+\draw[yellow, very thick,->,>=latex] (0,0) -- ({0.50*cos(-30) - 0.86*sin(-30)} ,{0.50*sin(-30) + 0.86*cos(-30)} );
+\draw[->,thick] (0,0) -- ({0.59*cos(-30) -  0.81*sin(-30)}, {0.59*sin(-30) +  0.81*cos(-30)}) node[below] {$\vec{i}$};
+\end{tikzpicture} 
+\end{minipage}
+&
+\begin{minipage}[h]{0.7\linewidth}
+	{\small\begin{itemize}
+\item измеряемые величины -- перпендикулярные координаты вектора % \cite{Gorev},\cite{Sokolovsky}; 
+%\item физическая величина -- всегда произведение  ко- и контра-вариантных координат;
+%\item изображающий вектор симметричной системы есть $2/3 (I_a + I_b + I_c)$;
+%\item рисунок -- есть результат 1й практической работы.
+\end{itemize}
+	}
+\end{minipage}
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\small координаты %вектора 
+	в двойственных (сопряженных) базисах}
+\begin{figure}[!ht]
+\centering
+\begin{circuitikz}
+        \newcommand{\Axis}{6.3}
+        \newcommand{\Axisy}{4.5}
+        \newcommand{\Axisyy}{-1.4}
+        \newcommand{\gammaa}{120} % угол между осями
+        \newcommand{\E}{3.2}
+        \newcommand{\alfa}{20} % угол вектора
+        \newcommand{\V}{4.5}
+        \draw[thin,->] (0,0) -- ({\Axis*cos(0)},{\Axis*sin(0)}) node [right] {$\small X_{\scriptstyle 1}$};
+        \draw[thin,->] ({\Axisyy*cos(\gammaa)},{\Axisyy*sin(\gammaa)}) -- ({\Axisy*cos(\gammaa)},{\Axisy*sin(\gammaa)}) node [above] {$\small X_{\scriptstyle 2}$};
+        \draw[thick, ->] (0,0) -- ({\E*cos(0)},{\E*sin(0)}) node[below] {$\vec{e}_{\scriptstyle 1}$};
+        \draw[thick, ->] (0,0) -- ({\E*cos(\gammaa)},{\E*sin(\gammaa)}) node[left] {$\vec{e}_{\scriptstyle 2}$};
+        % сопряженные оси
+        \draw[thin,->] (0,0) -- ({\Axis*cos(\gammaa-90)},{\Axis*sin(\gammaa-90)}) node [right] {$\small X^{\scriptstyle 1}$};
+        \draw[thin,->] ({\Axisyy*cos(90)},{\Axisyy*sin(90)}) -- ({\Axisy*cos(90)},{\Axisy*sin(90)}) node [above] {$\small X^{\scriptstyle 2}$};
+        \draw[thick, ->] (0,0) -- ({\E*cos(0)},{\E*tan(\gammaa-90)}) node[above left=-1.5mm] {$\vec{e}^{\scriptstyle\;1}$};
+        \draw[thick, ->] (0,0) -- (0, {\E/cos(\gammaa-90)}) node[right] {$\vec{e}^{\scriptstyle\;2}$};
+
+       % сам вектор
+        \draw[thick, blue] (0,0) -- ({\V*cos(\alfa)},{\V*sin(\alfa)}) node (V) {} node[right] {$\vec{x}$};
+        % перпендикулярные проекции
+        \draw[dashed] ({\V*cos(\alfa)},{\V*sin(\alfa)}) to[short,-] ({\V*cos(\alfa)},0) node[below] {$\frac{x_{\scriptscriptstyle 1}}{|e_{\scriptscriptstyle 1}|}$};
+        \filldraw[color=white, draw=black] ({\V*cos(\alfa)},0)  circle (0.56mm);
+        % продолжим до сопряженной оси
+        \draw[dashed] ({\V*cos(\alfa)},{\V*sin(\alfa)}) to[short] ({\V*cos(\alfa)},{\V*cos(\alfa)*tan(\gammaa-90)}) node[right] {${\scriptstyle x_{\scriptscriptstyle 1}|e^{\scriptscriptstyle 1}|}$};
+        \filldraw[color=white, draw=black] ({\V*cos(\alfa)},{\V*cos(\alfa)*tan(\gammaa-90)}) circle (0.56mm);
+
+        \newcommand{\Vbc}{(\V*cos(\alfa)*cos(\gammaa) + \V*sin(\alfa)*sin(\gammaa))} % проекция на ось Vbc
+        % продолжим до вертикальной оси
+        \draw[dashed] (V.center) -- (0,{\Vbc/cos(\gammaa-90)}) node[left] {${\scriptstyle x_{\scriptscriptstyle 2} |e^{\scriptscriptstyle 2}|}$};
+        \filldraw[color=white, draw=black]  (0,{\Vbc/cos(\gammaa-90)})   circle (0.56mm);
+        \draw[dashed] (V.center) -- ({\Vbc*cos(\gammaa)},{\Vbc*sin(\gammaa)}) node[right=1.8mm] {$\frac{x^{\scriptscriptstyle 2}}{|e^{\scriptscriptstyle 2}|}$};
+        \filldraw[color=white, draw=black]  ({\Vbc*cos(\gammaa)},{\Vbc*sin(\gammaa)}) circle (0.56mm);
+
+        %проекция на сопряженную ось e^{AB}
+%        \newcommand{\VAB}{(\V*cos(\alfa)*cos(\gammaa-90-\alfa) + \V*sin(\alfa)*sin(\gammaa-90-\alfa))} % проекция на ось V^AB  -- clamsy error
+        \newcommand{\VAB}{\V*cos(\gammaa-90-\alfa)} % проекция на ось V^AB
+        \draw[dashed]  (V.center) -- ({\VAB/cos(\gammaa-90)}, 0) node[below] {${\scriptstyle x^{\scriptscriptstyle 1} |e_{\scriptscriptstyle 1}|}$};
+        \filldraw[color=white, draw=black] ({\VAB/cos(\gammaa-90)}, 0)  circle (0.56mm);
+        \draw[dashed]  (V.center) -- ({\VAB*cos(\gammaa-90)}, {\VAB*sin(\gammaa-90)}) node[above left=-1.4mm] {$\frac{x^{\scriptscriptstyle 1}}{|e^{\scriptscriptstyle 1}|} $};
+        \filldraw[color=white, draw=black]  ({\VAB*cos(\gammaa-90)}, {\VAB*sin(\gammaa-90)})  circle (0.56mm);
+        % проекции вдоль оси X_1
+        \draw[dashed]  (V.center) -- ({-\V*sin(\alfa)*tan(\gammaa-90)} , {\V*sin(\alfa)}) node[left] {${\scriptstyle x^{\scriptscriptstyle 2} |e_{\scriptscriptstyle 2}|}$};
+        \filldraw[color=white, draw=black]  ({-\V*sin(\alfa)*tan(\gammaa-90)} , {\V*sin(\alfa)}) circle (0.56mm);
+        \draw[dashed]  (V.center) -- (0, {\V*sin(\alfa)}) node[above right] {$\frac{x^{\scriptscriptstyle 2}}{|e^{\scriptscriptstyle 2}|} $};
+        \filldraw[color=white, draw=black]  (0, {\V*sin(\alfa)}) circle (0.56mm);
+
+\end{circuitikz}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{\small выбор осей измерений линейных напряжений и фазных токов}
+%\begin{figure}[!ht]
+%\centering
+\begin{circuitikz}
+        \newcommand{\Axis}{6.0}
+        \newcommand{\Axisy}{4.0}
+        \newcommand{\Axisyy}{-1.4}
+        \newcommand{\gammaa}{120} % угол между осями
+        \newcommand{\E}{2.3}
+        \newcommand{\alfa}{10} % угол вектора i
+        \newcommand{\betaa}{23} % угол вектора u
+        \newcommand{\V}{4.9}
+        \newcommand{\UU}{4.1}
+
+        \draw[thin,->] (0,0) -- ({\Axis*cos(0)},{\Axis*sin(0)}) node [right] {$U_{\scriptscriptstyle  AB}, I^{\scriptscriptstyle  AB}$};
+        \draw[thin,->] ({\Axisyy*cos(\gammaa)},{\Axisyy*sin(\gammaa)}) -- ({\Axisy*cos(\gammaa)},{\Axisy*sin(\gammaa)}) node [above] {$U_{\scriptscriptstyle  BC}, I^{\scriptscriptstyle  BC}$};
+
+        % сопряженные оси
+        \draw[thin,->] (0,0) -- ({\Axis*cos(\gammaa-90)},{\Axis*sin(\gammaa-90)}) node [right] {$I_{\scriptscriptstyle  (-A)}$};
+        \draw[thin,->] ({\Axisyy*cos(90)},{\Axisyy*sin(90)}) -- ({\Axisy*cos(90)},{\Axisy*sin(90)}) node [right] {$I_{\scriptscriptstyle  C}$};
+
+       % сам вектор
+        \draw[thick, red,->] (0,0) -- ({\V*cos(\alfa)},{\V*sin(\alfa)}) node (V) {} node[above right] {$\vec{i}$};
+        \draw[thick, blue,->] (0,0) -- ({\UU*cos(\betaa)},{\UU*sin(\betaa)}) node (U) {} node[right] {$\vec{u}$};
+        % перпендикулярные проекции
+        \draw[dashed] ({\UU*cos(\betaa)},{\UU*sin(\betaa)}) to[short,-] ({\UU*cos(\betaa)},0) node[below] {$u_{\scriptscriptstyle AB}$};
+        \filldraw[color=white, draw=black] ({\UU*cos(\betaa)},0)  circle (0.56mm);
+
+       %проекция на сопряженную ось e^{AB}
+        \newcommand{\VAB}{\V*cos(\gammaa-90-\alfa)} % проекция на ось V^AB
+        \draw[dashed]  (V.center) -- ({\VAB/cos(\gammaa-90)}, 0) node[below] {$i^{\scriptscriptstyle AB}$};
+        \filldraw[color=white, draw=black] ({\VAB/cos(\gammaa-90)}, 0)  circle (0.56mm);
+
+        \draw[dashed]  (V.center) -- ({\VAB*cos(\gammaa-90)}, {\VAB*sin(\gammaa-90)}) node[above=1.3mm] {$i_{\scriptscriptstyle (-A)}$};
+        \filldraw[color=white, draw=black]  ({\VAB*cos(\gammaa-90)}, {\VAB*sin(\gammaa-90)})  circle (0.56mm);
+
+
+
+        \newcommand{\Ubc}{(\UU*cos(\betaa)*cos(\gammaa) + \UU*sin(\betaa)*sin(\gammaa))} % проекция на ось Vbc
+        \draw[dashed] (U.center) -- ({\Ubc*cos(\gammaa)},{\Ubc*sin(\gammaa)}) node[right=1.8mm] {$u^{\scriptscriptstyle BC}$};
+        \filldraw[color=white, draw=black]  ({\Ubc*cos(\gammaa)},{\Ubc*sin(\gammaa)}) circle (0.56mm);
+
+        % проекции вдоль оси X_1
+        \draw[dashed]  (V.center) -- ({-\V*sin(\alfa)*tan(\gammaa-90)} , {\V*sin(\alfa)}) node[left] {$i^{\scriptscriptstyle BC}$};
+        \filldraw[color=white, draw=black]  ({-\V*sin(\alfa)*tan(\gammaa-90)} , {\V*sin(\alfa)}) circle (0.56mm);
+        \draw[dashed]  (V.center) -- (0, {\V*sin(\alfa)}) node[above right] {$i_{\scriptscriptstyle C}$};
+        \filldraw[color=white, draw=black]  (0, {\V*sin(\alfa)}) circle (0.56mm);
+
+\end{circuitikz}
+%        \caption{выбор осей измерений линейных напряжений и фазных токов}
+%        \label{pickup_mesure}
+%\end{figure}
+$$
+p = (\vec{i}\cdot\vec{u}) = u_{\scriptscriptstyle AB} i^{\scriptscriptstyle AB} + u_{\scriptscriptstyle BC} i^{\scriptscriptstyle BC}
+%u_{\scriptscriptstyle AB} i_{\scriptscriptstyle (-A)} + u_{\scriptscriptstyle BC} i_{\scriptscriptstyle C}
+$$
+%\vspace{-0.7cm}\hspace{-1.2cm}
+$$
+	\scriptstyle{
+p = (u_{\scriptscriptstyle B} - v_{\scriptscriptstyle 0} +  v_{\scriptscriptstyle 0} - u_{\scriptscriptstyle A}) i_{\scriptscriptstyle (-A)} +
+(u_{\scriptscriptstyle C} - v_{\scriptscriptstyle 0} +  v_{\scriptscriptstyle 0} - u_{\scriptscriptstyle B}) i_{\scriptscriptstyle C} =
+ u_{\scriptscriptstyle A} i_{\scriptscriptstyle A} + u_{\scriptscriptstyle B} i_{\scriptscriptstyle B}  + u_{\scriptscriptstyle C} i_{\scriptscriptstyle C}
+}
+$$
+\end{frame}
+
+\begin{frame}
+\frametitle{\smallподход}
+Предъявим $d-$, $q-$:
+	\begin{itemize}
+		\item $d-\;$  линейная комбинация $\alpha \cdot \vec{u}$;
+
+		\item $q-\;$  $\vec{i} = (i_{\scriptscriptstyle A}, i_{\scriptscriptstyle C} ) \Rightarrow (-i_{\scriptscriptstyle C}, i_{\scriptscriptstyle A} )$
+	\end{itemize}
+	\vspace{0.5cm}
+
+\begin{circuitikz}
+        \newcommand{\Axis}{6.0}
+        \newcommand{\Axisy}{3.8}
+        \newcommand{\Axisyy}{-0.8}
+        \newcommand{\gammaa}{120} % угол между осями
+        \newcommand{\E}{2.3}
+        \newcommand{\alfa}{10} % угол вектора i
+        \newcommand{\betaa}{23} % угол вектора u
+        \newcommand{\V}{4.9}
+        \newcommand{\UU}{4.1}
+
+        \draw[thin,->] (0,0) -- ({\Axis*cos(0)},{\Axis*sin(0)}) node [right] {$U_{\scriptscriptstyle  AB}, I^{\scriptscriptstyle  AB}$};
+        \draw[thin,->] ({\Axisyy*cos(\gammaa)},{\Axisyy*sin(\gammaa)}) -- ({\Axisy*cos(\gammaa)},{\Axisy*sin(\gammaa)}) node [above] {$U_{\scriptscriptstyle  BC}, I^{\scriptscriptstyle  BC}$};
+
+        % сопряженные оси
+        \draw[thin,->] (0,0) -- ({\Axis*cos(\gammaa-90)},{\Axis*sin(\gammaa-90)}) node [right] {$I_{\scriptscriptstyle  (-A)}$};
+        \draw[thin,->] ({\Axisyy*cos(90)},{\Axisyy*sin(90)}) -- ({\Axisy*cos(90)},{\Axisy*sin(90)}) node [right] {$I_{\scriptscriptstyle  C}$};
+
+       % сам вектор
+        \draw[thick, red,->] (0,0) -- ({\V*cos(\alfa)},{\V*sin(\alfa)}) node (V) {} node[below right] {$\vec{i}$};
+	\draw[thick, blue,->] (0,0) -- ({\UU*cos(\betaa)},{\UU*sin(\betaa)}) node (U) {} node[right] {$\vec{u}_\text{сети}$};
+
+	\draw (U.center) --++ ({-\V*sin(\alfa)/2},{\V*cos(\alfa)/2}) node (Uinvert) {};
+	\draw[thick, blue,->] (0,0) -- (Uinvert.center) {} node[right] {$\vec{u}_\text{инвертора}$};
+        % перпендикулярные проекции
+%        \draw[dashed] ({\UU*cos(\betaa)},{\UU*sin(\betaa)}) to[short,-] ({\UU*cos(\betaa)},0) node[below] {$u_{\scriptscriptstyle AB}$};
+%        \filldraw[color=white, draw=black] ({\UU*cos(\betaa)},0)  circle (0.56mm);
+
+       %проекция на сопряженную ось e^{AB}
+%        \newcommand{\VAB}{\V*cos(\gammaa-90-\alfa)} % проекция на ось V^AB
+%        \draw[dashed]  (V.center) -- ({\VAB/cos(\gammaa-90)}, 0) node[below] {$i^{\scriptscriptstyle AB}$};
+%        \filldraw[color=white, draw=black] ({\VAB/cos(\gammaa-90)}, 0)  circle (0.56mm);
+
+%        \draw[dashed]  (V.center) -- ({\VAB*cos(\gammaa-90)}, {\VAB*sin(\gammaa-90)}) node[above=1.3mm] {$i_{\scriptscriptstyle (-A)}$};
+%        \filldraw[color=white, draw=black]  ({\VAB*cos(\gammaa-90)}, {\VAB*sin(\gammaa-90)})  circle (0.56mm);
+
+
+
+%        \newcommand{\Ubc}{(\UU*cos(\betaa)*cos(\gammaa) + \UU*sin(\betaa)*sin(\gammaa))} % проекция на ось Vbc
+%        \draw[dashed] (U.center) -- ({\Ubc*cos(\gammaa)},{\Ubc*sin(\gammaa)}) node[right=1.8mm] {$u^{\scriptscriptstyle BC}$};
+%        \filldraw[color=white, draw=black]  ({\Ubc*cos(\gammaa)},{\Ubc*sin(\gammaa)}) circle (0.56mm);
+
+        % проекции вдоль оси X_1
+%        \draw[dashed]  (V.center) -- ({-\V*sin(\alfa)*tan(\gammaa-90)} , {\V*sin(\alfa)}) node[left] {$i^{\scriptscriptstyle BC}$};
+%        \filldraw[color=white, draw=black]  ({-\V*sin(\alfa)*tan(\gammaa-90)} , {\V*sin(\alfa)}) circle (0.56mm);
+%        \draw[dashed]  (V.center) -- (0, {\V*sin(\alfa)}) node[above right] {$i_{\scriptscriptstyle C}$};
+%        \filldraw[color=white, draw=black]  (0, {\V*sin(\alfa)}) circle (0.56mm);
+
+\end{circuitikz}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\smallрезультат}
+	В системе управления инвертора 
+	\begin{itemize}
+		\itemизлишен переход в декартову систему
+		\itemиспользуем измеренные величины с минимумом преобразований 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{\smallлитература}
+	\vspace{-0.4cm}
+	\small{
+\begin{thebibliography}{7}
+	\bibitem{Gorev}Горев А.А. Переходные процессы синхронной машины. -- М.,Л., Гос. энергетическое изд., 1950. -- 551 c.
+        \bibitem{Sokolovsky}Соколовский Г.Г. Электроприводы переменного тока с частотным регулированием: Учебник для студ. высш.учеб.заведений.
+                -- М. «Академия», 2007 - 272 с.
+	\bibitem{Borisenko}Борисенко А.И., Тарапов И.Е. Векторный анализ и начала тензорного исчисления. -- М. «Высшая школа», 1966. -- 252 с.
+        \bibitem{Prokshin}Илюшин А.Г., Маслов И.А., Прокшин А.Н. и др. О системах координат для математического описания систем управления электропривода. --
+                Сборник докладов 71-й научно-технической конференции ППС, СПб, 2018, с.172
+	
+%	\bibitem{Proshivka}Заливка прошивки в STM32 через USB \url{https://habr.com/post/403007/}
+%	\bibitem{Zagruzchik}Программа-загрузчик \url{github.com/rogerclarkmelbourne/Arduino\_STM32}
+%	\bibitem{MexBios}Мехбиос \url{http://www.mechatronica-pro.com}
+%	\bibitem{source} Исходный код блока \url{https://github.com/trot-t/RemoteLabs}
+%	\bibitem{ControlSUITE} \url{https://www.ti.com/tool/CONTROLSUITE}
+		%описание на русском https://habr.com/post/403007/\\
+%на английском %http://www.rogerclark.net/stm32f103-and-maple-maple-mini-with-arduino-1-5-x-ide/
+%
+%       Сама  программа загрузчик -- \\
+%{\small https://github.com/rogerclarkmelbourne/Arduino\_STM32}
+
+\end{thebibliography}
+}
+\end{frame}
+\end{document}
+
